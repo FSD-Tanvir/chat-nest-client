@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
 // import { TbFidgetSpinner } from "react-icons/tb";
 // import { toast } from "react-hot-toast";
 // import { imageUpload } from "../../api/utils";
@@ -7,35 +8,45 @@ import { FcGoogle } from "react-icons/fc";
 // import { getToken, saveUser } from "../../api/auth";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   // const { createUser, updateUserProfile, signInWithGoogle, loading } =
   //   useAuth();
   // const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const image = form.image.files[0];
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const name = form.name.value;
+  //   const email = form.email.value;
+  //   const password = form.password.value;
+  //   const image = form.image.files[0];
 
-    // try {
-    //   //1.upload image
-    //   const imageData = await imageUpload(image);
-    //   //2.user registration
-    //   const result = await createUser(email, password);
-    //   //3.save user name and profile photo
-    //   await updateUserProfile(name, imageData?.data?.display_url);
-    //   //4.save user data in database
-    //   const dbResponse = await saveUser(result?.user);
-    //   // get token
-    //   await getToken(result?.user?.email);
-    //   navigate("/");
-    //   toast.success("SignUp Successful");
-    // } catch (err) {
-    //   toast.error(err?.message);
-    // }
+  const onSubmit = (data) => {
+    console.log(data);
   };
+
+  // try {
+  //   //1.upload image
+  //   const imageData = await imageUpload(image);
+  //   //2.user registration
+  //   const result = await createUser(email, password);
+  //   //3.save user name and profile photo
+  //   await updateUserProfile(name, imageData?.data?.display_url);
+  //   //4.save user data in database
+  //   const dbResponse = await saveUser(result?.user);
+  //   // get token
+  //   await getToken(result?.user?.email);
+  //   navigate("/");
+  //   toast.success("SignUp Successful");
+  // } catch (err) {
+  //   toast.error(err?.message);
+  // }
+  // };
 
   const handleGoogleSignIn = async () => {
     // try {
@@ -60,10 +71,10 @@ const SignUp = () => {
           <p className="text-sm text-gray-500">Welcome to Chat Nest</p>
         </div>
         <form
+          onSubmit={handleSubmit(onSubmit)}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
-          onSubmit={handleSubmit}
         >
           <div className="space-y-4">
             <div>
@@ -74,6 +85,7 @@ const SignUp = () => {
                 Name
               </label>
               <input
+                {...register("name")}
                 type="text"
                 name="name"
                 id="name"
@@ -90,6 +102,7 @@ const SignUp = () => {
                 Select Image:
               </label>
               <input
+                {...register("image")}
                 required
                 type="file"
                 id="image"
@@ -106,6 +119,7 @@ const SignUp = () => {
                 Email address
               </label>
               <input
+                {...register("email")}
                 type="email"
                 name="email"
                 id="email"
@@ -123,6 +137,10 @@ const SignUp = () => {
                 Password
               </label>
               <input
+                {...register("password", {
+                  pattern:
+                    /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6}/,
+                })}
                 type="password"
                 name="password"
                 autoComplete="new-password"
@@ -131,6 +149,12 @@ const SignUp = () => {
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:border-rose-500 bg-gray-100 text-gray-800"
               />
+              {errors.password?.type === "pattern" && (
+                <p className="text-red-500">
+                  password must have one number,one uppercase,one lowercase,
+                  special character and than 6 characters
+                </p>
+              )}
             </div>
           </div>
 

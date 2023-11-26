@@ -1,33 +1,44 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
 // import useAuth from "../../hooks/useAuth";
 // import { getToken, saveUser } from "../../api/auth";
 // import toast from "react-hot-toast";
 // import { TbFidgetSpinner } from "react-icons/tb";
 
 const signIn = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   // const { signIn, signInWithGoogle, loading } = useAuth();
   // const navigate = useNavigate();
   // const location = useLocation();
   // const to = location?.state?.from?.pathname || "/";
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const email = form.email.value;
+  //   const password = form.password.value;
 
-    // try {
-    //   //user login
-    //   const result = await signIn(email, password);
-    //   // get token
-    //   await getToken(result?.user?.email);
-    //   navigate(to, { replace: true });
-    //   toast.success("Login Successful");
-    // } catch (err) {
-    //   toast.error(err?.message);
-    // }
-  };
+  // try {
+  //   //user login
+  //   const result = await signIn(email, password);
+  //   // get token
+  //   await getToken(result?.user?.email);
+  //   navigate(to, { replace: true });
+  //   toast.success("Login Successful");
+  // } catch (err) {
+  //   toast.error(err?.message);
+  // }
+  // };
 
   const handleGoogleSignIn = async () => {
     // try {
@@ -54,7 +65,7 @@ const signIn = () => {
           </p>
         </div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -68,6 +79,7 @@ const signIn = () => {
                 Email address
               </label>
               <input
+                {...register("email", { required: "Email is required" })}
                 type="email"
                 name="email"
                 id="email"
@@ -76,6 +88,9 @@ const signIn = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:border-rose-500 bg-gray-100 text-gray-800"
                 data-temp-mail-org="0"
               />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
             <div>
               <label
@@ -85,6 +100,7 @@ const signIn = () => {
                 Password
               </label>
               <input
+                {...register("password", { required: "Password is required" })}
                 type="password"
                 name="password"
                 autoComplete="current-password"
@@ -93,6 +109,9 @@ const signIn = () => {
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:border-rose-500 bg-gray-100 text-gray-800"
               />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
             </div>
           </div>
 
