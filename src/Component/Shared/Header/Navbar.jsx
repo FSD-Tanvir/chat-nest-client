@@ -28,10 +28,10 @@ const Navbar = ({ isLoggedIn, profilePicture, onLogout }) => {
 
         {/* Menu Options */}
         <div className={`lg:flex items-center absolute top-full left-0 bg-white lg:bg-transparent lg:relative lg:items-center ${isMenuOpen ? 'block' : 'hidden'} lg:inline-block lg:w-auto lg:mt-0 mt-4 rounded-lg overflow-hidden shadow-lg`}>
-          <Link to="/" className="text-gray-800 lg:text-white block px-4 py-2 lg:py-0 lg:hover:bg-gray-200 transition duration-300">
+          <Link to="/" className="text-gray-800 lg:text-white block px-4 py-2 lg:py-0 lg:hover:bg-gray-300 transition duration-300">
             Home
           </Link>
-          <Link to="/membership" className="text-gray-800 lg:text-white block px-4 py-2 lg:py-0 lg:hover:bg-gray-200 transition duration-300">
+          <Link to="/membership" className="text-gray-800 lg:text-white block px-4 py-2 lg:py-0 lg:hover:bg-gray-300 transition duration-300">
             Membership
           </Link>
           {isLoggedIn && (
@@ -53,7 +53,7 @@ const Navbar = ({ isLoggedIn, profilePicture, onLogout }) => {
                   <span className="mr-2">User Name</span>
                   <div className="flex items-center">
                     <button
-                      className="px-4 py-2 block lg:py-0 lg:hover:bg-gray-200 transition duration-300"
+                      className="px-4 py-2 block lg:py-0 lg:hover:bg-gray-300 transition duration-300"
                       onClick={() => console.log("Dashboard Clicked")}
                     >
                       <FaUser className="mr-2" />
@@ -61,7 +61,7 @@ const Navbar = ({ isLoggedIn, profilePicture, onLogout }) => {
                     </button>
                     <button
                       onClick={onLogout}
-                      className="px-4 py-2 block lg:py-0 lg:hover:bg-gray-200 transition duration-300"
+                      className="px-4 py-2 block lg:py-0 lg:hover:bg-gray-300 transition duration-300"
                     >
                       <FaSignOutAlt className="mr-2" />
                       Logout
@@ -74,7 +74,7 @@ const Navbar = ({ isLoggedIn, profilePicture, onLogout }) => {
           {!isLoggedIn && (
             <Link
               to="/join"
-              className="text-gray-800 lg:hover:bg-gray-200 px-4 py-2 block lg:py-0 transform transition-transform duration-300"
+              className="text-gray-800 lg:hover:bg-gray-300 px-4 py-2 block lg:py-0 transform transition-transform duration-300"
             >
               Join Us
             </Link>
