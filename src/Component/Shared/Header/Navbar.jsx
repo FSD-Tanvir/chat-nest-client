@@ -73,7 +73,7 @@ const Navbar = ({ isLoggedIn, profilePicture, onLogout }) => {
           )}
           {!isLoggedIn && (
             <Link
-              to="/join"
+              to="/sign-in"
               className="text-gray-800 lg:hover:bg-gray-300 px-4 py-2 block lg:py-0 transform transition-transform duration-300"
             >
               Join Us
