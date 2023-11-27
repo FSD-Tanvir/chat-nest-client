@@ -1,26 +1,37 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
-// import useAuth from "../../hooks/useAuth";
+import useAuth from "../../Component/Hooks/useAuth";
 // import { getToken, saveUser } from "../../api/auth";
-// import toast from "react-hot-toast";
-// import { TbFidgetSpinner } from "react-icons/tb";
+import toast from "react-hot-toast";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const signIn = () => {
+  const { signIn, signInWithGoogle, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const to = location?.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-  };
 
-  // const { signIn, signInWithGoogle, loading } = useAuth();
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const to = location?.state?.from?.pathname || "/";
+    try {
+      //user login
+      const result = await signIn(data?.email, data?.password);
+      // get token
+      // await getToken(result?.user?.email);
+      navigate(to, { replace: true });
+      toast.success("Sign In Successful");
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
 
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
@@ -41,18 +52,18 @@ const signIn = () => {
   // };
 
   const handleGoogleSignIn = async () => {
-    // try {
-    //   //handle google sign in
-    //   const result = await signInWithGoogle();
-    //   //save user data in database
-    //   const dbResponse = await saveUser(result?.user);
-    //   // get token
-    //   await getToken(result?.user?.email);
-    //   navigate(to, { replace: true });
-    //   toast.success("Login Successful");
-    // } catch (err) {
-    //   toast.error(err?.message);
-    // }
+    try {
+      //handle google sign in
+      const result = await signInWithGoogle();
+      //save user data in database
+      // const dbResponse = await saveUser(result?.user);
+      // get token
+      // await getToken(result?.user?.email);
+      navigate(to, { replace: true });
+      toast.success("Sign in Successful");
+    } catch (err) {
+      toast.error(err?.message);
+    }
   };
 
   return (
@@ -120,12 +131,11 @@ const signIn = () => {
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white hover:bg-rose-600 transition duration-300"
             >
-              {/* {loading ? (
+              {loading ? (
                 <TbFidgetSpinner className="animate-spin m-auto" />
               ) : (
                 "Continue"
-              )} */}
-              Continue
+              )}
             </button>
           </div>
         </form>

@@ -10,7 +10,7 @@ const Banner = () => {
         <p className="text-lg mb-8 text-center lg:text-xl lg:max-w-2xl">
           Join discussions on various topics and connect with the community.
         </p>
-        <div className="relative w-full max-w-md mx-auto">
+        <div className=" w-full max-w-md mx-auto">
           <input
             type="text"
             placeholder="Search by tags..."

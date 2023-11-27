@@ -1,22 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
-// import { TbFidgetSpinner } from "react-icons/tb";
-// import { toast } from "react-hot-toast";
+import { TbFidgetSpinner } from "react-icons/tb";
+import { toast } from "react-hot-toast";
+import useAuth from "../../Component/Hooks/useAuth";
+import { imageUpload } from "../../api/utils";
 // import { imageUpload } from "../../api/utils";
-// import useAuth from "../../hooks/useAuth";
+
 // import { getToken, saveUser } from "../../api/auth";
 
 const SignUp = () => {
+  const { createUser, updateUserProfile, signInWithGoogle, loading } =
+    useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  // const { createUser, updateUserProfile, signInWithGoogle, loading } =
-  //   useAuth();
-  // const navigate = useNavigate();
 
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
@@ -26,41 +29,40 @@ const SignUp = () => {
   //   const password = form.password.value;
   //   const image = form.image.files[0];
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+
+    try {
+      //1.upload image
+      const imageData = await imageUpload(data.image[0]);
+      //2.user registration
+      const result = await createUser(data?.email, data?.password);
+      //3.save user name and profile photo
+      await updateUserProfile(data?.name, imageData?.data?.display_url);
+      //   //4.save user data in database
+      //   const dbResponse = await saveUser(result?.user);
+      //   // get token
+      //   await getToken(result?.user?.email);
+      navigate("/");
+      toast.success("SignUp Successful");
+    } catch (err) {
+      toast.error(err?.message);
+    }
   };
 
-  // try {
-  //   //1.upload image
-  //   const imageData = await imageUpload(image);
-  //   //2.user registration
-  //   const result = await createUser(email, password);
-  //   //3.save user name and profile photo
-  //   await updateUserProfile(name, imageData?.data?.display_url);
-  //   //4.save user data in database
-  //   const dbResponse = await saveUser(result?.user);
-  //   // get token
-  //   await getToken(result?.user?.email);
-  //   navigate("/");
-  //   toast.success("SignUp Successful");
-  // } catch (err) {
-  //   toast.error(err?.message);
-  // }
-  // };
-
   const handleGoogleSignIn = async () => {
-    // try {
-    //   //handle google sign in
-    //   const result = await signInWithGoogle();
-    //   //save user data in database
-    //   const dbResponse = await saveUser(result?.user);
-    //   // get token
-    //   await getToken(result?.user?.email);
-    //   navigate("/");
-    //   toast.success("SignUp Successful");
-    // } catch (err) {
-    //   toast.error(err?.message);
-    // }
+    try {
+      //handle google sign in
+      const result = await signInWithGoogle();
+      //save user data in database
+      // const dbResponse = await saveUser(result?.user);
+      // get token
+      // await getToken(result?.user?.email);
+      navigate("/");
+      toast.success("SignUp Successful");
+    } catch (err) {
+      toast.error(err?.message);
+    }
   };
 
   return (
@@ -85,14 +87,15 @@ const SignUp = () => {
                 Name
               </label>
               <input
-                {...register("name")}
+                {...register("name", { required: "Name is required" })}
                 type="text"
-                name="name"
                 id="name"
                 placeholder="Enter Your Name Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:border-rose-500 bg-gray-100 text-gray-800"
-                data-temp-mail-org="0"
               />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
             <div>
               <label
@@ -102,7 +105,7 @@ const SignUp = () => {
                 Select Image:
               </label>
               <input
-                {...register("image")}
+                {...register("image", { required: "Image is required" })}
                 required
                 type="file"
                 id="image"
@@ -110,6 +113,9 @@ const SignUp = () => {
                 accept="image/*"
                 className="w-full"
               />
+              {errors.image && (
+                <p className="text-red-500">{errors.image.message}</p>
+              )}
             </div>
             <div>
               <label
@@ -119,15 +125,17 @@ const SignUp = () => {
                 Email address
               </label>
               <input
-                {...register("email")}
+                {...register("email", { required: "Email is required" })}
                 type="email"
                 name="email"
                 id="email"
                 required
                 placeholder="Enter Your Email Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:border-rose-500 bg-gray-100 text-gray-800"
-                data-temp-mail-org="0"
               />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
             <div>
               <label
@@ -138,6 +146,7 @@ const SignUp = () => {
               </label>
               <input
                 {...register("password", {
+                  required: "Password is required",
                   pattern:
                     /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6}/,
                 })}
@@ -151,8 +160,8 @@ const SignUp = () => {
               />
               {errors.password?.type === "pattern" && (
                 <p className="text-red-500">
-                  password must have one number,one uppercase,one lowercase,
-                  special character and than 6 characters
+                  Password must have one number, one uppercase, one lowercase,
+                  special character, and at least 6 characters
                 </p>
               )}
             </div>
@@ -163,19 +172,18 @@ const SignUp = () => {
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white hover:bg-rose-600 transition duration-300"
             >
-              {/* {loading ? (
+              {loading ? (
                 <TbFidgetSpinner className="animate-spin m-auto" />
               ) : (
                 "Continue"
-              )} */}
-              Continue
+              )}
             </button>
           </div>
         </form>
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
           <p className="px-3 text-sm text-gray-500">
-            Signup with social accounts
+            Sign Up with social accounts
           </p>
           <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
         </div>

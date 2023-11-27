@@ -14,7 +14,7 @@ const Announcement = () => {
 
   // Define fade-in transition
   const fadeTransition = useTransition(hasAnnouncements, {
-    from: { opacity: 0, transform: 'translateY(-10px)' },
+    from: { opacity: 0, transform: 'translateY(-50px)' },
     enter: { opacity: 1, transform: 'translateY(0)' },
     config: { tension: 300, friction: 10 }, // Adjust these values for the desired animation
   });
@@ -23,7 +23,7 @@ const Announcement = () => {
     <>
       {fadeTransition((style, item) =>
         item && (
-          <animated.div style={style} className="container mx-auto mt-8">
+          <animated.div style={style} className="container mx-auto my-8">
             <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 p-6 rounded-md shadow-md text-white">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-2xl font-bold flex items-center">
