@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaHome, FaTimes } from "react-icons/fa";
 import { MdNotifications } from "react-icons/md";
 import useAuth from "../../Hooks/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
@@ -26,7 +26,10 @@ const Navbar = ({ onLogout }) => {
           to="/"
           className="text-white text-3xl font-bold flex items-center"
         >
-          <span className="mr-2">🌐</span> Chat Nest
+          <span className="mr-2">
+            <FaHome />
+          </span>{" "}
+          Chat Nest
         </Link>
 
         {/* Responsive Toggle Button */}
@@ -39,7 +42,7 @@ const Navbar = ({ onLogout }) => {
 
         {/* Menu Options */}
         <div
-         className={`lg:flex items-center absolute top-full left-0 bg-white lg:bg-transparent lg:relative lg:items-center ${
+          className={`lg:flex items-center absolute top-full left-0 bg-white lg:bg-transparent lg:relative lg:items-center ${
             isMenuOpen ? "block" : "hidden"
           } lg:inline-block lg:w-auto lg:mt-0 mt-4 rounded-lg  shadow-lg `}
         >
@@ -58,19 +61,17 @@ const Navbar = ({ onLogout }) => {
           {user && (
             <div className="relative m-2 flex justify-center">
               {/* Notification Icon */}
-              
 
               {/* User Profile Dropdown */}
-              <div
-                onClick={toggleProfileDropdown}
-                className="cursor-pointer"
-              >
+              <div onClick={toggleProfileDropdown} className="cursor-pointer">
                 <img
                   src={user?.photoURL}
                   alt="Profile"
                   className="w-10 h-10 rounded-full border-2 border-gray-800 cursor-pointer transform hover:scale-110 transition-transform"
                 />
-                {isProfileDropdownOpen && <ProfileDropdown onLogout={onLogout} />}
+                {isProfileDropdownOpen && (
+                  <ProfileDropdown onLogout={onLogout} />
+                )}
               </div>
             </div>
           )}

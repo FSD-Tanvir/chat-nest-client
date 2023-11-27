@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Banner = () => {
   return (
     <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-12 text-white">
-      <div className="container mx-auto flex flex-col items-center">
+      <div className="container mx-auto flex flex-col items-center px-1">
         <h1 className="text-4xl font-bold mb-4 text-center lg:text-5xl lg:mb-8">
           Explore Conversations
         </h1>
