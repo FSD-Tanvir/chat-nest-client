@@ -12,6 +12,7 @@ import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
 import MakeAnnouncement from "../Pages/Dashboard/Admin/MakeAnnouncement";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ReportedActivities from "../Pages/Dashboard/Admin/ReportedActivities";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ export const router = createBrowserRouter([
   { path: "/sign-up", element: <SignUp /> },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "my-profile",
