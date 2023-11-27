@@ -13,6 +13,7 @@ import MakeAnnouncement from "../Pages/Dashboard/Admin/MakeAnnouncement";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ReportedActivities from "../Pages/Dashboard/Admin/ReportedActivities";
 import PrivateRoute from "./PrivateRoute";
+import MemberShip from "../Pages/Membership/MemberShip";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/membership",
+        element: (
+          <PrivateRoute>
+            <MemberShip />
+          </PrivateRoute>
+        ),
       },
     ],
   },
