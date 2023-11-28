@@ -5,7 +5,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
 import useAuth from "../../Component/Hooks/useAuth";
 import { imageUpload } from "../../api/utils";
-import { saveUser } from "../../api/auth";
+import { getToken, saveUser } from "../../api/auth";
 // import { imageUpload } from "../../api/utils";
 
 // import { getToken, saveUser } from "../../api/auth";
@@ -40,9 +40,9 @@ const SignUp = () => {
       await updateUserProfile(data?.name, imageData?.data?.display_url);
       //4.save user data in database
       const dbResponse = await saveUser(result?.user);
-      
-      //   // get token
-      //   await getToken(result?.user?.email);
+      // get token
+      await getToken(result?.user?.email);
+
       navigate("/");
       toast.success("SignUp Successful");
     } catch (err) {
