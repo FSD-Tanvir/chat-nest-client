@@ -55,9 +55,9 @@ const SignUp = () => {
       //handle google sign in
       const result = await signInWithGoogle();
       //save user data in database
-      // const dbResponse = await saveUser(result?.user);
+      const dbResponse = await saveUser(result?.user);
       // get token
-      // await getToken(result?.user?.email);
+      await getToken(result?.user?.email);
       navigate("/");
       toast.success("SignUp Successful");
     } catch (err) {

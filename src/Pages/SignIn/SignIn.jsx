@@ -5,6 +5,7 @@ import useAuth from "../../Component/Hooks/useAuth";
 // import { getToken, saveUser } from "../../api/auth";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { getToken, saveUser } from "../../api/auth";
 
 const signIn = () => {
   const { signIn, signInWithGoogle, loading } = useAuth();
@@ -25,7 +26,7 @@ const signIn = () => {
       //user login
       const result = await signIn(data?.email, data?.password);
       // get token
-      // await getToken(result?.user?.email);
+      await getToken(result?.user?.email);
       navigate(to, { replace: true });
       toast.success("Sign In Successful");
     } catch (err) {
@@ -56,9 +57,9 @@ const signIn = () => {
       //handle google sign in
       const result = await signInWithGoogle();
       //save user data in database
-      // const dbResponse = await saveUser(result?.user);
+      const dbResponse = await saveUser(result?.user);
       // get token
-      // await getToken(result?.user?.email);
+      await getToken(result?.user?.email);
       navigate(to, { replace: true });
       toast.success("Sign in Successful");
     } catch (err) {
