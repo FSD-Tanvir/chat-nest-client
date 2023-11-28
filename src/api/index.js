@@ -1,5 +1,6 @@
 import axios from "axios";
-// import { clearCookie } from "./auth";
+import { clearCookie } from "./auth";
+
 
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -7,20 +8,20 @@ const axiosSecure = axios.create({
 });
 
 //intercept res and check for unauthorized res
-// axiosSecure.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     console.log("Error tracked in the interceptor", error.response);
-//     if (
-//       error.response &&
-//       (error.response.status === 401 || error.response.status === 403)
-//     ) {
-//       await clearCookie();
-//       window.location.replace("/sign-in");
-//     }
+axiosSecure.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    console.log("Error tracked in the interceptor", error.response);
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      await clearCookie();
+      window.location.replace("/sign-in");
+    }
 
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);
 
 export default axiosSecure;
