@@ -1,9 +1,10 @@
-
-
 import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import useAuth from "../../../Component/Hooks/useAuth";
+import { addPost } from "../../../api/posts";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const animatedComponents = makeAnimated();
 
@@ -17,12 +18,13 @@ const tagsOptions = [
 const AddPost = () => {
   const { user } = useAuth();
   const [selectedTags, setSelectedTags] = useState([]);
+  const navigate = useNavigate();
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const authorName = user?.displayName;
@@ -45,8 +47,14 @@ const AddPost = () => {
       downVote,
     };
 
-    console.log("Submitted Data:", postData);
-    // You can now send this data to your backend or perform any necessary actions
+    try {
+      const data = await addPost(postData);
+      console.log(data);
+      toast.success("Post Added");
+      navigate("/dashboard/my-posts");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
