@@ -6,9 +6,6 @@ import { toast } from "react-hot-toast";
 import useAuth from "../../Component/Hooks/useAuth";
 import { imageUpload } from "../../api/utils";
 import { getToken, saveUser } from "../../api/auth";
-// import { imageUpload } from "../../api/utils";
-
-// import { getToken, saveUser } from "../../api/auth";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
@@ -22,13 +19,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const name = form.name.value;
-  //   const email = form.email.value;
-  //   const password = form.password.value;
-  //   const image = form.image.files[0];
 
   const onSubmit = async (data) => {
     try {

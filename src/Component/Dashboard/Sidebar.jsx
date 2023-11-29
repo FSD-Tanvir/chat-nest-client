@@ -1,29 +1,19 @@
 import { useState } from "react";
-import MenuItem from "./MenuItem";
-// import ToggleBtn from "../../Button/ToggleBtn";
 import { GrLogout } from "react-icons/gr";
 import { AiOutlineBars } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
-import { FaHome, FaPen } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
-import { GiPostOffice } from "react-icons/gi";
-import { TfiAnnouncement } from "react-icons/tfi";
-import { MdManageAccounts } from "react-icons/md";
-import { MdReportProblem } from "react-icons/md";
-// import { BsFillHouseAddFill } from "react-icons/bs";
-// import { MdHomeWork } from "react-icons/md";
-// import useRole from "../../../hooks/useRole";
-// import GuestMenu from "./Menu/GuestMenu";
-// import HostMenu from "./Menu/HostMenu";
-// import AdminMenu from "./Menu/AdminMenu";
+import { FaHome } from "react-icons/fa";
+import AdminMenu from "./Menu/AdminMenu";
+import UserMenu from "./Menu/UserMenu";
+import useRole from "../Hooks/useRole";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
   const [isActive, setActive] = useState(true);
-  //   const [role] = useRole();
+  const [role] = useRole();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -81,57 +71,15 @@ const Sidebar = () => {
             {/* If a user is host */}
 
             <nav>
-              <MenuItem
-                icon={CgProfile}
-                label="My Profile"
-                address="/dashboard/my-profile"
-              />
-              <MenuItem
-                icon={FaPen}
-                label="Add Post"
-                address="/dashboard/add-post"
-              />
-              <MenuItem
-                icon={GiPostOffice}
-                label="My Posts"
-                address="/dashboard/my-posts"
-              />
-              <MenuItem
-                icon={CgProfile}
-                label="Admin Profile"
-                address="/dashboard/admin-profile"
-              />
-              <MenuItem
-                icon={TfiAnnouncement}
-                label="Make Announcement"
-                address="/dashboard/make-announcement"
-              />
-              <MenuItem
-                icon={MdManageAccounts}
-                label="Manage Users"
-                address="/dashboard/manage-users"
-              />
-              <MenuItem
-                icon={MdReportProblem}
-                label="Reported Activities"
-                address="/dashboard/reported-activities"
-              />
-
               {/* Role based Menu Items */}
 
-              {/* {role ? (
+              {role ? (
                 <>
-                  {role === "guest" && <GuestMenu />}
-                  {role === "host" ? (
-                    toggle ? (
-                      <HostMenu />
-                    ) : (
-                      <GuestMenu />
-                    )
-                  ) : null}
+                  {role === "bronze" && <UserMenu />}
+                  {role === "gold" && <UserMenu />}
                   {role === "admin" && <AdminMenu />}
                 </>
-              ) : null} */}
+              ) : null}
             </nav>
           </div>
         </div>

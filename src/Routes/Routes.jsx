@@ -14,6 +14,8 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ReportedActivities from "../Pages/Dashboard/Admin/ReportedActivities";
 import PrivateRoute from "./PrivateRoute";
 import MemberShip from "../Pages/Membership/MemberShip";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
 
 export const router = createBrowserRouter([
   {
@@ -47,31 +49,59 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "my-profile",
-        element: <MyProfile />,
+        element: (
+          <UserRoute>
+            <MyProfile />
+          </UserRoute>
+        ),
       },
       {
         path: "add-post",
-        element: <AddPost />,
+        element: (
+          <UserRoute>
+            <AddPost />
+          </UserRoute>
+        ),
       },
       {
         path: "my-posts",
-        element: <MyPosts />,
+        element: (
+          <UserRoute>
+            <MyPosts />
+          </UserRoute>
+        ),
       },
       {
         path: "admin-profile",
-        element: <AdminProfile />,
+        element: (
+          <AdminRoute>
+            <AdminProfile />
+          </AdminRoute>
+        ),
       },
       {
         path: "make-announcement",
-        element: <MakeAnnouncement />,
+        element: (
+          <AdminRoute>
+            <MakeAnnouncement />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "reported-activities",
-        element: <ReportedActivities />,
+        element: (
+          <AdminRoute>
+            <ReportedActivities />
+          </AdminRoute>
+        ),
       },
     ],
   },
