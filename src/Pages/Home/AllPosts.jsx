@@ -82,7 +82,7 @@ const AllPosts = () => {
                         <div className="flex items-center space-x-4 text-gray-500 mt-1">
                           <p className="text-xs">
                             <span className="font-bold">
-                              {/* commentCount here */}
+                              {/* commentCount here */} 0
                               </span>{" "}
                             Comments
                           </p>

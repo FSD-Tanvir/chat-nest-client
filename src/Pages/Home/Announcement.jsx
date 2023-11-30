@@ -17,7 +17,7 @@ const Announcement = () => {
   return (
     <>
       {user && (
-        <div className="container mx-auto my-8">
+        <div className="container mx-auto my-8 px-2">
           <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 p-6 rounded-md shadow-md text-white">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold flex items-center">

@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
 
 const Banner = () => {
+
+  
+  const handleSearch = () => {
+
+
+  }
+
+
   return (
     <div className="min-h-[calc(100vh-224px)] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-12 text-white flex items-center justify-center">
       <div className="container mx-auto flex flex-col items-center px-1">
@@ -12,6 +20,7 @@ const Banner = () => {
         </p>
         <div className=" w-full max-w-md mx-auto">
           <input
+            onChange={handleSearch}
             type="text"
             placeholder="Search by tags..."
             className="w-full h-12 px-4 text-gray-800 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500"
