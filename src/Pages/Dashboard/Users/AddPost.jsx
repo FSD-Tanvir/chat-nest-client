@@ -5,17 +5,24 @@ import useAuth from "../../../Component/Hooks/useAuth";
 import { addPost } from "../../../api/posts";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getAllTags } from "../../../api/tags";
 
 const animatedComponents = makeAnimated();
 
-const tagsOptions = [
-  { value: "react", label: "React" },
-  { value: "javascript", label: "JavaScript" },
-  { value: "nodejs", label: "Node.js" },
-  // Add more tag options as needed
-];
+// const tagsOptions = [
+//   { value: "react", label: "React" },
+//   { value: "javascript", label: "JavaScript" },
+//   { value: "nodejs", label: "Node.js" },
+//   // Add more tag options as needed
+// ];
 
 const AddPost = () => {
+  const { data: tagsOptions } = useQuery({
+    queryFn: async () => await getAllTags(),
+    queryKey: ["tagsOptions"],
+  });
+
   const { user } = useAuth();
   const [selectedTags, setSelectedTags] = useState([]);
   const navigate = useNavigate();
@@ -29,7 +36,7 @@ const AddPost = () => {
     const form = e.target;
     const postTitle = form.postTitle.value;
     const postDescription = form.postDescription.value;
-    const time = Date.now()
+    const time = Date.now();
     const upVote = 0;
     const downVote = 0;
     const author = {
@@ -199,23 +206,25 @@ const AddPost = () => {
         </div>
 
         {/* select tags */}
-        <div>
-          <label
-            htmlFor="tags"
-            className="block text-sm font-medium text-white"
-          >
-            Tags:
-          </label>
-          <Select
-            id="tags"
-            components={animatedComponents}
-            options={tagsOptions}
-            onChange={handleTagChange}
-            isSearchable={false} // Disable the ability to type in the field
-            placeholder="Select tags"
-            className="mt-1 border border-white rounded-md focus:border-blue-300"
-          />
-        </div>
+        {tagsOptions ? (
+          <div>
+            <label
+              htmlFor="tags"
+              className="block text-sm font-medium text-white"
+            >
+              Tags:
+            </label>
+            <Select
+              id="tags"
+              components={animatedComponents}
+              options={tagsOptions}
+              onChange={handleTagChange}
+              isSearchable={false} // Disable the ability to type in the field
+              placeholder="Select tags"
+              className="mt-1 border border-white rounded-md focus:border-blue-300"
+            />
+          </div>
+        ) : null}
 
         <button
           type="submit"
