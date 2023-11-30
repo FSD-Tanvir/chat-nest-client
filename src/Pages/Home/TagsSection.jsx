@@ -3,6 +3,7 @@ import { getAllTags } from "../../api/tags";
 import Loader from "../../Component/Shared/Loader";
 
 const TagsSection = () => {
+  
   const { data: allTags, isLoading } = useQuery({
     queryFn: async () => await getAllTags(),
     queryKey: ["allTags"],
