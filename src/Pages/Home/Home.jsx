@@ -1,3 +1,4 @@
+import AllPosts from "./AllPosts";
 import Announcement from "./Announcement";
 import Banner from "./Banner";
 import TagsSection from "./TagsSection";
@@ -8,6 +9,7 @@ const Home = () => {
       <Banner />
       <TagsSection />
       <Announcement />
+      <AllPosts/>
     </div>
   );
 };

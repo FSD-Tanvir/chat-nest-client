@@ -27,24 +27,26 @@ const AddPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const authorName = user?.displayName;
-    const authorEmail = user?.email;
-    const authorImage = user?.photoURL;
     const postTitle = form.postTitle.value;
     const postDescription = form.postDescription.value;
+    const time = Date.now()
     const upVote = 0;
     const downVote = 0;
+    const author = {
+      authorEmail: user?.email,
+      authorName: user?.displayName,
+      authorImage: user?.photoURL,
+    };
 
     // Handle form submission logic here
     const postData = {
-      authorImage,
-      authorName,
-      authorEmail,
       postTitle,
       postDescription,
       selectedTags,
+      time,
       upVote,
       downVote,
+      author,
     };
 
     try {

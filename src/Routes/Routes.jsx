@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import MemberShip from "../Pages/Membership/MemberShip";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
+import PostDetails from "../Pages/PostDetails/PostDetails";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,15 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/post/:id",
+        element: (
+          <PrivateRoute>
+            <PostDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => fetch(`http://localhost:5000/post/${params.id}`) 
       },
       {
         path: "/membership",
