@@ -17,6 +17,7 @@ import MemberShip from "../Pages/Membership/MemberShip";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import PostDetails from "../Pages/PostDetails/PostDetails";
+import DashboardPage from "../Pages/Dashboard/DashboardPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,8 @@ export const router = createBrowserRouter([
             <PostDetails />
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`http://localhost:5000/post/${params.id}`) 
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/post/${params.id}`),
       },
       {
         path: "/membership",
@@ -57,6 +59,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "",
+        element: <DashboardPage />,
+      },
       {
         path: "my-profile",
         element: (

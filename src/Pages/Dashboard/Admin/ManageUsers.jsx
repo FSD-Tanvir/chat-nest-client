@@ -14,7 +14,7 @@ const ManageUsers = () => {
   }
 
   return (
-    <div className="w-full m-auto bg-white rounded-md shadow-md min-h-screen">
+    <div className="w-full m-auto bg-white rounded-md shadow-md min-h-screen py-10">
       <h1 className="text-3xl font-semibold text-center text-rose-600 mb-3">
         Here is Your All Posts
       </h1>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const MangeUsersTable = ({ data }) => {
   const users = data;
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto pt-5">
       <table className="table">
         {/* head */}
         <thead>
@@ -33,7 +33,7 @@ const MangeUsersTable = ({ data }) => {
                 <td>{user.badge}</td>
                 <td>
                   <Link>
-                    <button className="btn btn-sm btn-outline block leading-loose text-xs text-center  font-semibold  rounded-xl">
+                    <button className="w-[100px] btn btn-sm btn-outline block leading-loose text-xs text-center  font-semibold  rounded-xl">
                       Make Admin
                     </button>
                   </Link>

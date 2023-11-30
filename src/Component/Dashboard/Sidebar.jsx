@@ -29,8 +29,8 @@ const Sidebar = () => {
     <>
       {/* Small Screen Navbar */}
       <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white flex justify-between md:hidden ">
-        <div>
-          <Link to="/" className=" text-3xl font-bold flex items-center my-3">
+        <div >
+          <Link to="/" className="ml-2 text-3xl font-bold flex items-center my-3">
             <span className="mr-2">
               <FaHome />
             </span>{" "}
