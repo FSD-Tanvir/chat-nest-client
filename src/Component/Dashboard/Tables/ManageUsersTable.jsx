@@ -33,7 +33,7 @@ const MangeUsersTable = ({ data }) => {
                 <td>{user.badge}</td>
                 <td>
                   <Link>
-                    <button className="btn btn-md btn-outline block px-4 py-3 mb-2 leading-loose text-xs text-center  font-semibold  rounded-xl">
+                    <button className="btn btn-sm btn-outline block leading-loose text-xs text-center  font-semibold  rounded-xl">
                       Make Admin
                     </button>
                   </Link>
