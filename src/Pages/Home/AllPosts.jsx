@@ -1,33 +1,27 @@
+/* eslint-disable react/prop-types */
 import { useQuery } from "@tanstack/react-query";
-import { getAllPosts, getPostsByPopularity } from "../../api/posts";
+import { getPostsByPopularity } from "../../api/posts";
 import Loader from "../../Component/Shared/Loader";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const AllPosts = () => {
+const AllPosts = ({ allPosts }) => {
   const [posts, setPosts] = useState();
 
-  const { data , isLoading } = useQuery({
-    queryFn: async () => await getAllPosts(),
-    queryKey: ["allPosts"],
-  });
-
-  const { data: allPostsByPopularity } = useQuery({
+  const { data: allPostsByPopularity, isLoading } = useQuery({
     queryFn: async () => await getPostsByPopularity(),
     queryKey: ["PostsByPopularity"],
   });
 
   useEffect(() => {
-    setPosts(data);
-  }, [data]);
+    setPosts(allPosts);
+  }, [allPosts]);
 
   const handleBtnPopular = () => {
     setPosts(allPostsByPopularity);
   };
 
   if (isLoading) return <Loader />;
-  
-  console.log(posts);
 
   return (
     <>
@@ -83,7 +77,7 @@ const AllPosts = () => {
                           <p className="text-xs">
                             <span className="font-bold">
                               {/* commentCount here */} 0
-                              </span>{" "}
+                            </span>{" "}
                             Comments
                           </p>
                           <p className="text-xs">
