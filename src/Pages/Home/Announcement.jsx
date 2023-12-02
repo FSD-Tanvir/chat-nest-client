@@ -28,7 +28,7 @@ const Announcement = () => {
             {/* Display announcements if there are any */}
             <div className="space-y-4">
               {announcements.map((announcement) => (
-                <div key={announcement.id}>
+                <div key={announcement._id}>
                   <h3 className="text-lg font-semibold">
                     {announcement.title}
                   </h3>

@@ -1,5 +1,9 @@
 import { FaTrophy } from "react-icons/fa";
 import { useSpring, animated } from "react-spring";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "../../Component/Form/CheckoutForm";
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_GateWay_PK);
 
 const Membership = () => {
   // Animation
@@ -31,9 +35,27 @@ const Membership = () => {
             Get the prestigious Gold Badge beside your name
           </p>
           <p className="text-3xl font-bold text-yellow-600">$9.99/month</p>
-          <button className="bg-yellow-500 hover:bg-yellow-400 text-white px-6 py-3 rounded-md mt-4 inline-block transition-all duration-300">
+
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <button
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+            className="bg-yellow-500 hover:bg-yellow-400 text-white px-6 py-3 rounded-md mt-4 inline-block transition-all duration-300"
+          >
             Upgrade Now
           </button>
+          <dialog id="my_modal_1" className="modal">
+            <div className="modal-box">
+              <Elements stripe={stripePromise}>
+                <CheckoutForm />
+              </Elements>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Cancel</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </div>
       </div>
     </animated.div>
