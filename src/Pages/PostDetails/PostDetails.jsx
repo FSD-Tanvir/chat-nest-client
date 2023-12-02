@@ -1,12 +1,21 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
+import useAuth from "../../Component/Hooks/useAuth";
+import axios from "axios";
+import axiosSecure from "../../api";
 // import { ShareButton } from "react-share";
 
 const PostDetails = () => {
+
+  const { user } = useAuth();
+  const[allComments, setAllComments] = useState()
+
+
   const post = useLoaderData();
   const {
+    _id,
     author,
     postTitle,
     postDescription,
@@ -22,7 +31,45 @@ const PostDetails = () => {
     setUserVote(type);
   };
 
-  const handleComment = () => {};
+  const handleComment = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const postId = _id;
+    const comment = form.comment.value;
+    const commenter = user.displayName;
+
+    const commentData = {
+      postId,
+      comment,
+      commenter,
+    };
+
+    axiosSecure
+      .post("/comments", commentData)
+      .then(() => {
+        form.reset();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(()=>{
+    const fetchData = async () =>{
+      try{
+        const response = await fetch(`http://localhost:5000/comments/${_id}`)
+        if(!response.ok){
+          throw new Error('Network Error')
+        }
+        const fetchData = await response.json()
+        setAllComments(fetchData)
+      }
+      catch (error){
+        console.log(error);
+      }
+    }
+    fetchData()
+  },[_id])
+
+
 
   // const shareUrl = `http://localhost:5173/post/${post._id}`;
 
@@ -60,27 +107,29 @@ const PostDetails = () => {
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-4">Comments</h3>
         {
-          // comments.map((comment, index) => (
-          //   <div key={index} className="bg-gray-100 p-4 rounded-md mb-4">
-          //     <p className="font-semibold">{comment.user}</p>
-          //     <p>{comment.text}</p>
-          //   </div>
-          // ))
+          allComments ? 
+          allComments.map((comment) => (
+            <div key={comment._id} className="bg-gray-100 p-4 rounded-md mb-4">
+              <p className="font-semibold">{comment.commenter}</p>
+              <p>{comment.comment}</p>
+            </div>
+          )): null
         }
 
-        <div className="add-comment mt-6">
+        <form onSubmit={handleComment} className="add-comment mt-6">
           <textarea
             rows="3"
+            name="comment"
             placeholder="Add your comment..."
             className="w-full p-2 border rounded-md"
           ></textarea>
           <button
-            onClick={handleComment}
+            type="submit"
             className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
           >
             Add Comment
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

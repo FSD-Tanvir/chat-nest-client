@@ -4,6 +4,8 @@ import { getPostsByPopularity } from "../../api/posts";
 import Loader from "../../Component/Shared/Loader";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axiosSecure from "../../api";
+import { comma } from "postcss/lib/list";
 
 const AllPosts = ({ allPosts }) => {
   const [posts, setPosts] = useState();
@@ -12,6 +14,13 @@ const AllPosts = ({ allPosts }) => {
     queryFn: async () => await getPostsByPopularity(),
     queryKey: ["PostsByPopularity"],
   });
+
+  const { data: comments } = useQuery({
+    queryFn: async () => await axiosSecure("/comments"),
+    queryKey: ["allComments"],
+  });
+
+  console.log(comments?.data);
 
   useEffect(() => {
     setPosts(allPosts);
@@ -52,6 +61,11 @@ const AllPosts = ({ allPosts }) => {
                   upVote,
                   downVote,
                 } = post;
+
+                const postComments = comments
+                  ? comments.data.filter((item) => item.postId === _id)
+                  : [];
+
                 const votesCount = upVote + downVote;
                 return (
                   <Link key={_id} to={`/post/${_id}`}>
@@ -76,7 +90,8 @@ const AllPosts = ({ allPosts }) => {
                         <div className="flex items-center space-x-4 text-gray-500 mt-1">
                           <p className="text-xs">
                             <span className="font-bold">
-                              {/* commentCount here */} 0
+                              {/* commentCount here */}
+                              {postComments.length}
                             </span>{" "}
                             Comments
                           </p>
