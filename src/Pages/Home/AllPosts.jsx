@@ -5,7 +5,6 @@ import Loader from "../../Component/Shared/Loader";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosSecure from "../../api";
-import { comma } from "postcss/lib/list";
 
 const AllPosts = ({ allPosts }) => {
   const [posts, setPosts] = useState();
@@ -19,8 +18,6 @@ const AllPosts = ({ allPosts }) => {
     queryFn: async () => await axiosSecure("/comments"),
     queryKey: ["allComments"],
   });
-
-  console.log(comments?.data);
 
   useEffect(() => {
     setPosts(allPosts);

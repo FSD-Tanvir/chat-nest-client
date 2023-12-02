@@ -48,6 +48,7 @@ const PostDetails = () => {
       .post("/comments", commentData)
       .then(() => {
         form.reset();
+        window.location.reload()
       })
       .catch((err) => console.log(err));
   };
