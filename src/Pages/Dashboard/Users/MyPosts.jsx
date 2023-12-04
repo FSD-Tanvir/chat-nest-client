@@ -10,7 +10,7 @@ const MyPosts = () => {
     queryKey: [userEmail],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:5000/my-posts/?userEmail=${userEmail}`
+        `https://chat-nest-server.vercel.app/my-posts/?userEmail=${userEmail}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
